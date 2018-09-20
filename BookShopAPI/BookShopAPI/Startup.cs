@@ -39,12 +39,12 @@ namespace BookShopAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseForwardedHeaders(new ForwardedHeadersOptions// dodadeno step 5
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.All
             });
 
-            app.Use(async (context, next) =>// dodadeno step 5
+            app.Use(async (context, next) =>
             {
                 await next();
 
