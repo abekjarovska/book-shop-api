@@ -1,0 +1,8 @@
+/build/
+*.suo
+*.user
+bin/
+obj/
+.vs/
+/Scripts/
+*.bak
