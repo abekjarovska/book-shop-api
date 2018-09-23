@@ -66,4 +66,5 @@ steps:
 		}
 	]
 
-
+3. Logging
+ **Custom logger service is implemented for the needs of this solution, achieved by using NLog, a logging platform which will help us create and log our massages.
