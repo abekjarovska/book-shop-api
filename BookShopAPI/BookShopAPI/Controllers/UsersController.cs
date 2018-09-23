@@ -14,10 +14,12 @@ namespace BookShopAPI.Controllers
     public class UsersController : ControllerBase
     {
         private IRepositoryWrapper _repoWrapper;
+        private ILoggerManager _logger;
 
-        public UsersController(IRepositoryWrapper repoWrapper)
+        public UsersController(IRepositoryWrapper repoWrapper, ILoggerManager logger)
         {
             _repoWrapper = repoWrapper;
+            _logger = logger;
         }
 
         // GET: api/Users/5
@@ -25,7 +27,13 @@ namespace BookShopAPI.Controllers
         public ActionResult<Users> Get(string UserId)
         {
             var users = _repoWrapper.Users.FindByID(UserId);
-            if (users == null) return NotFound("Not found");
+            if (users == null)
+            {
+                _logger.LogInfo("api/Users/" + UserId + ". Not found");
+                return NotFound("Not found");
+            }
+
+            _logger.LogInfo("api/Users/" + UserId + ". User found");
             return users;
         }
 
@@ -35,6 +43,7 @@ namespace BookShopAPI.Controllers
         {
             user.registred = 1;
             _repoWrapper.Users.Create(user);
+            _logger.LogInfo("api/Users/ User registred: " + user.UserId);
         }
 
         // PUT: api/Users/5
@@ -45,10 +54,12 @@ namespace BookShopAPI.Controllers
             if (OldUserid == user.UserId)
             {
                 _repoWrapper.Users.Update(user);
+                _logger.LogInfo("api/Users/"+ OldUserid +" updated.");
                 return Ok("Ok");
             }
             else
             {
+                _logger.LogInfo("api/Users/" + OldUserid + " not updated. Old UserId doesn't match UserId");
                 return Ok("Old UserId doesn't match UserId");
             }
         }
@@ -58,6 +69,7 @@ namespace BookShopAPI.Controllers
         public void UnRegisterUser(string UserId)
         {
             _repoWrapper.Users.UnRegisterUser(UserId);
+            _logger.LogInfo("api/Users/ User unregistred: " + UserId);
         }
 
     }

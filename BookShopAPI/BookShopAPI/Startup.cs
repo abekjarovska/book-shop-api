@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NLog;
 
 namespace BookShopAPI
 {
@@ -19,7 +20,9 @@ namespace BookShopAPI
     {
         public Startup(IConfiguration configuration)
         {
+            LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
@@ -28,6 +31,7 @@ namespace BookShopAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureIISIntegration();// dodadeno step 5
+            services.ConfigureLoggerService();
             services.ConfigureRepositoryWrapper(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

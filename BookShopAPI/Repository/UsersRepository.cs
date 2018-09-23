@@ -18,11 +18,11 @@ namespace Repository
         private MySqlDataAdapter _sqlDA;
         private string _sqlStr;
         private string _connStr;
-
         public UsersRepository(String connStr)
         {
             _sqlStr = "SELECT * FROM Users";
             _connStr = connStr;
+           
             _sqlDA = new MySqlDataAdapter(_sqlStr, _connStr);
         }
 

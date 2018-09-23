@@ -14,10 +14,12 @@ namespace BookShopAPI.Controllers
     public class BooksController : ControllerBase
     {
         private IRepositoryWrapper _repoWrapper;
+        private ILoggerManager _logger;
 
-        public BooksController(IRepositoryWrapper repoWrapper)
+        public BooksController(IRepositoryWrapper repoWrapper, ILoggerManager logger)
         {
             _repoWrapper = repoWrapper;
+            _logger = logger;
         }
 
         // GET: api/Books
@@ -34,6 +36,7 @@ namespace BookShopAPI.Controllers
         public void Post([FromBody] Books book)
         {
             _repoWrapper.Books.Create(book);
+            _logger.LogInfo("api/Books  Created book: " + book.BookId);
         }
     }
 }

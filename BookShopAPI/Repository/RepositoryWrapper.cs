@@ -10,7 +10,6 @@ namespace Repository
     {
        
         private String _connStr;
-
         private IUsersRepository _Users;
         private IBooksRepository _Books;
         private IPurchaseServiceRepository _PurchaseService;
